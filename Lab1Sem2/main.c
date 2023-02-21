@@ -75,7 +75,8 @@ void outputStruct(struct Book* books,const int* n)
 {
     for (int i = 0; i < *n; i++)
     {
-        printf("Name:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
+        if (i >= 0 && i < *n)
+            printf("Name:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
     }
 }
 
@@ -160,17 +161,16 @@ void sortStruct(struct Book* books, const int* size, int key)
     }
 }
 
+
 void deleteStruct(struct Book* books, int* n)
 {
     int x;
     printf("Enter the number delete struct::");
     scanf("%d", &x);
     struct Book temp;
-    for (int i = x - 1; i < *(n) - 1; i++)
+    for (int i = x - 1; i < *n - 1; i++)
     {
-        temp = books[i + 1];
-        books[i + 1] = books[i];
-        books[i] = temp;
+        books[i]=books[i+1];
     }
     *n = *n - 1;
     books = (struct Book*)realloc(books, *n * sizeof(struct Book));
