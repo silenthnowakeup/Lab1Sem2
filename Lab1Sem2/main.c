@@ -1,23 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
 //Название книги 2 автор 3 год издания 4 язык
 
-
+enum language {
+    Russian,
+    English,
+    Chinese,
+    Spanish,
+    Arabic,
+    Other
+};
 
 struct Book {
-    char name[20];
-    char author[20];
+    char* name;
+    char* author;
     int year;
-    enum language {
-        Russian,
-        English,
-        Chinese,
-        Spanish,
-        Arabic,
-        Other
-    }language;
+    enum language language;
 };
 
 static char* LanguageName[] =
@@ -30,28 +29,49 @@ static char* LanguageName[] =
                 "Other"
         };
 
-void printStruct(struct Book* books, int* n)
+char* getString() {
+    int maxLength = 16;
+    int length = 0;
+    char* str = malloc(maxLength * sizeof(char));
+    char c = getchar();
+    while (c != '\n') {
+        str[length] = c;
+        length++;
+
+        if (length >= maxLength) {
+            maxLength += 2;
+            str = realloc(str, maxLength * sizeof(char));
+        }
+
+        c = getchar();
+    }
+
+    str[length] = '\0';
+
+    return str;
+}
+
+void printStruct(struct Book* books,const int* n)
 {
-    char temp;
     for (int i = 0; i < *n; i++) {
         printf("Enter name #%d book::", i + 1);
-        temp = getchar();
-        gets(books[i].name);
+        getchar();
+        books[i].name = getString();
 
         printf("Enter author #%d book::", i + 1);
-        gets(books[i].author);
+        books[i].author = getString();
 
         printf("Enter year #%d book::", i + 1);
-        scanf("%d", &books[i].year);
+        scanf_s("%d", &books[i].year);
 
         printf("Enter language::(0 - Rus; 1 - Eng; 2 - Chin; 3 - Span; 4 - Arab; 5 - Oth.)::");
-        scanf("%d", &books[i].language);
+        scanf_s("%d", &books[i].language);
     }
 }
 
 void outputStruct(struct Book* books, int* n)
 {
-    for (int i = 0; i < *n; i++)
+    for (int i = 0; i < *(n); i++)
     {
         printf("Name:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
     }
@@ -61,7 +81,7 @@ void sortStructByName(struct Book* books, int* size)
 {
     int flag;
     struct Book swap;
-    for (int gap = *size / 2; gap > 0; gap /= 2)
+    for (int gap = *(size) / 2; gap > 0; gap /= 2)
     {
         do
         {
@@ -85,7 +105,7 @@ void sortStructByAuthor(struct Book* books, int* size) {
     {
         int flag;
         struct Book swap;
-        for (int gap = *size / 2; gap > 0; gap /= 2) {
+        for (int gap = *(size) / 2; gap > 0; gap /= 2) {
             do {
                 flag = 0;
                 for (int i = 0, j = gap; j < *size; i++, j++) {
@@ -107,7 +127,7 @@ void sortStructByYear(struct Book* books, int* size)
     {
         int flag;
         struct Book swap;
-        for (int gap = *size / 2; gap > 0; gap /= 2)
+        for (int gap = *(size) / 2; gap > 0; gap /= 2)
         {
             do
             {
@@ -131,7 +151,7 @@ void sortStructByLanguage(struct Book* books, int* size)
     {
         int flag;
         struct Book swap;
-        for (int gap = *size / 2; gap > 0; gap /= 2)
+        for (int gap = *(size) / 2; gap > 0; gap /= 2)
         {
             do
             {
@@ -154,9 +174,9 @@ void deleteStruct(struct Book* books, int* n)
 {
     int x;
     printf("Enter the number delete struct::");
-    scanf("%d", &x);
+    scanf_s("%d", &x);
     struct Book temp;
-    for (int i = x - 1; i < *n - 1; i++)
+    for (int i = x - 1; i < *(n) - 1; i++)
     {
         temp = books[i + 1];
         books[i + 1] = books[i];
@@ -177,7 +197,7 @@ int menu()
     printf("5 - To delete a structure by book number\n");
     printf("6 - To exit the program\n");
 
-    scanf("%d", &arg);
+    scanf_s("%d", &arg);
     return arg;
 }
 
@@ -187,7 +207,7 @@ int main()
     int n;
 
     printf("Enter the number of books to add::");
-    scanf("%d", &n);
+    scanf_s("%d", &n);
     int* pn = &n;
     printf("%d", *pn);
 
@@ -217,9 +237,7 @@ int main()
                 outputStruct(books, pn);
                 break;
             case 5:
-                printf("%d", n);
                 deleteStruct(books, pn);
-                printf("%d", n);
                 outputStruct(books, pn);
                 break;
             case 6:
