@@ -33,8 +33,10 @@ char* getString() {
     int maxLength = 16;
     int length = 0;
     char* str = malloc(maxLength * sizeof(char));
-    char c = getchar();
-    while (c != '\n') {
+    int i = getchar(); // используем переменную типа int
+    char c; // создаем переменную типа char
+    while (i != '\n') {
+        c = (char)i; // явно приводим тип int к типу char
         str[length] = c;
         length++;
 
@@ -43,7 +45,7 @@ char* getString() {
             str = realloc(str, maxLength * sizeof(char));
         }
 
-        c = getchar();
+        i = getchar();
     }
 
     str[length] = '\0';
@@ -62,14 +64,14 @@ void printStruct(struct Book* books,const int* n)
         books[i].author = getString();
 
         printf("Enter year #%d book::", i + 1);
-        scanf("%d", &books[i].year);
+        scanf_s("%d", &books[i].year);
 
         printf("Enter language::(0 - Rus; 1 - Eng; 2 - Chin; 3 - Span; 4 - Arab; 5 - Oth.)::");
-        scanf("%d", &books[i].language);
+        scanf_s("%d", &books[i].language);
     }
 }
 
-void outputStruct(struct Book* books, int* n)
+void outputStruct(struct Book* books,const int* n)
 {
     for (int i = 0; i < *(n); i++)
     {
@@ -77,7 +79,7 @@ void outputStruct(struct Book* books, int* n)
     }
 }
 
-void sortStructByName(struct Book* books, int* size)
+void sortStructByName(struct Book* books, const int* size)
 {
     int flag;
     struct Book swap;
@@ -101,7 +103,7 @@ void sortStructByName(struct Book* books, int* size)
     }
 }
 
-void sortStructByAuthor(struct Book* books, int* size) {
+void sortStructByAuthor(struct Book* books,const int* size) {
     {
         int flag;
         struct Book swap;
@@ -122,7 +124,7 @@ void sortStructByAuthor(struct Book* books, int* size) {
     }
 }
 
-void sortStructByYear(struct Book* books, int* size)
+void sortStructByYear(struct Book* books,const int* size)
 {
     {
         int flag;
@@ -146,7 +148,7 @@ void sortStructByYear(struct Book* books, int* size)
     }
 }
 
-void sortStructByLanguage(struct Book* books, int* size)
+void sortStructByLanguage(struct Book* books,const int* size)
 {
     {
         int flag;
@@ -174,7 +176,7 @@ void deleteStruct(struct Book* books, int* n)
 {
     int x;
     printf("Enter the number delete struct::");
-    scanf("%d", &x);
+    scanf_s("%d", &x);
     struct Book temp;
     for (int i = x - 1; i < *(n) - 1; i++)
     {
@@ -197,7 +199,7 @@ int menu()
     printf("5 - To delete a structure by book number\n");
     printf("6 - To exit the program\n");
 
-    scanf("%d", &arg);
+    scanf_s("%d", &arg);
     return arg;
 }
 
@@ -207,7 +209,7 @@ int main()
     int n;
 
     printf("Enter the number of books to add::");
-    scanf("%d", &n);
+    scanf_s("%d", &n);
     int* pn = &n;
     printf("%d", *pn);
 
