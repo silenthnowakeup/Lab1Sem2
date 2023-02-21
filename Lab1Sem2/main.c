@@ -73,44 +73,36 @@ void printStruct(struct Book* books,const int* n)
 
 void outputStruct(struct Book* books,const int* n)
 {
-    for (int i = 0; i < *(n); i++)
+    for (int i = 0; i < *n; i++)
     {
         printf("Name:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
     }
 }
 
-void sortStructByName(struct Book* books, const int* size)
+void sortStruct(struct Book* books, const int* size, int key)
 {
     int flag;
     struct Book swap;
-    for (int gap = *(size) / 2; gap > 0; gap /= 2)
+    for (int gap = *size / 2; gap > 0; gap /= 2)
     {
         do
         {
             flag = 0;
             for (int i = 0, j = gap; j < *size; i++, j++)
             {
-                int cmp = strcmp(books[i].name, books[j].name);
-                if (cmp > 0 || (cmp == 0 && strcmp(books[i].author, books[j].author) > 0))
+                if (key == 1) //сортировка по названию
                 {
-                    swap = books[j];
-                    books[j] = books[i];
-                    books[i] = swap;
-                    flag = 1;
+                    int cmp = strcmp(books[i].name, books[j].name);
+                    if (cmp > 0 || (cmp == 0 && strcmp(books[i].author, books[j].author) > 0)) {
+                        swap = books[j];
+                        books[j] = books[i];
+                        books[i] = swap;
+                        flag = 1;
+                    }
                 }
-            }
-        } while (flag);
-    }
-}
-
-void sortStructByAuthor(struct Book* books,const int* size) {
-    {
-        int flag;
-        struct Book swap;
-        for (int gap = *(size) / 2; gap > 0; gap /= 2) {
-            do {
-                flag = 0;
-                for (int i = 0, j = gap; j < *size; i++, j++) {
+                
+                else if (key==2) // сортировка по автору
+                {
                     int cmp = strcmp(books[i].author, books[j].author);
                     if (cmp > 0 || (cmp == 0 && books[i].year > books[j].year)) {
                         swap = books[j];
@@ -119,22 +111,8 @@ void sortStructByAuthor(struct Book* books,const int* size) {
                         flag = 1;
                     }
                 }
-            } while (flag);
-        }
-    }
-}
-
-void sortStructByYear(struct Book* books,const int* size)
-{
-    {
-        int flag;
-        struct Book swap;
-        for (int gap = *(size) / 2; gap > 0; gap /= 2)
-        {
-            do
-            {
-                flag = 0;
-                for (int i = 0, j = gap; j < *size; i++, j++)
+                
+                else if (key == 3) // сортировка по году
                 {
                     if ( books[i].year > books[j].year || (books[i].year - books[j].year == 0 && books[i].name > books[j].name)) {
                         swap = books[j];
@@ -143,22 +121,8 @@ void sortStructByYear(struct Book* books,const int* size)
                         flag = 1;
                     }
                 }
-            } while (flag);
-        }
-    }
-}
-
-void sortStructByLanguage(struct Book* books,const int* size)
-{
-    {
-        int flag;
-        struct Book swap;
-        for (int gap = *(size) / 2; gap > 0; gap /= 2)
-        {
-            do
-            {
-                flag = 0;
-                for (int i = 0, j = gap; j < *size; i++, j++)
+                
+                else if (key==4) //сортировка по языку
                 {
                     if ( books[i].language > books[j].language || (books[i].language - books[j].language == 0 && books[i].name > books[j].name)) {
                         swap = books[j];
@@ -167,8 +131,8 @@ void sortStructByLanguage(struct Book* books,const int* size)
                         flag = 1;
                     }
                 }
-            } while (flag);
-        }
+            }
+        } while (flag);
     }
 }
 
@@ -222,19 +186,19 @@ int main()
         switch (menu())
         {
             case 1:
-                sortStructByName(books, pn);
+                sortStruct(books, pn,1);
                 outputStruct(books, pn);
                 break;
             case 2:
-                sortStructByAuthor(books, pn);
+                sortStruct(books, pn,2);
                 outputStruct(books, pn);
                 break;
             case 3:
-                sortStructByYear(books, pn);
+                sortStruct(books, pn,3);
                 outputStruct(books, pn);
                 break;
             case 4:
-                sortStructByLanguage(books, pn);
+                sortStruct(books, pn,4);
                 outputStruct(books, pn);
                 break;
             case 5:
