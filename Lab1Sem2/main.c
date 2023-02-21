@@ -62,10 +62,10 @@ void printStruct(struct Book* books,const int* n)
         books[i].author = getString();
 
         printf("Enter year #%d book::", i + 1);
-        scanf_s("%d", &books[i].year);
+        scanf("%d", &books[i].year);
 
         printf("Enter language::(0 - Rus; 1 - Eng; 2 - Chin; 3 - Span; 4 - Arab; 5 - Oth.)::");
-        scanf_s("%d", &books[i].language);
+        scanf("%d", &books[i].language);
     }
 }
 
@@ -174,7 +174,7 @@ void deleteStruct(struct Book* books, int* n)
 {
     int x;
     printf("Enter the number delete struct::");
-    scanf_s("%d", &x);
+    scanf("%d", &x);
     struct Book temp;
     for (int i = x - 1; i < *(n) - 1; i++)
     {
@@ -197,7 +197,7 @@ int menu()
     printf("5 - To delete a structure by book number\n");
     printf("6 - To exit the program\n");
 
-    scanf_s("%d", &arg);
+    scanf("%d", &arg);
     return arg;
 }
 
@@ -207,7 +207,7 @@ int main()
     int n;
 
     printf("Enter the number of books to add::");
-    scanf_s("%d", &n);
+    scanf("%d", &n);
     int* pn = &n;
     printf("%d", *pn);
 
