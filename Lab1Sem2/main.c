@@ -176,7 +176,7 @@ void deleteStruct(struct Book* books, int* n)
 {
     int x;
     printf("Enter the number delete struct::");
-    scanf_s("%d", &x);
+    scanf("%d", &x);
     struct Book temp;
     for (int i = x - 1; i < *(n) - 1; i++)
     {
