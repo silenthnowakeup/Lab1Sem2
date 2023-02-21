@@ -79,6 +79,46 @@ void outputStruct(struct Book* books,const int* n)
     }
 }
 
+int compareByName(struct Book book1, struct Book book2)
+{
+    int cmp = strcmp(book1.name, book2.name);
+    if (cmp == 0)
+    {
+        return strcmp(book1.author, book2.author);
+    }
+    return cmp;
+}
+
+int compareByAuthor(struct Book book1, struct Book book2)
+{
+    int cmp = strcmp(book1.author, book2.author);
+    if (cmp == 0)
+    {
+        return book1.year - book2.year;
+    }
+    return cmp;
+}
+
+int compareByYear(struct Book book1, struct Book book2)
+{
+    int cmp = book1.year - book2.year;
+    if (cmp == 0)
+    {
+        return strcmp(book1.name, book2.name);
+    }
+    return cmp;
+}
+
+int compareByLanguage(struct Book book1, struct Book book2)
+{
+    int cmp = book1.language - book2.language;
+    if (cmp == 0)
+    {
+        return strcmp(book1.name, book2.name);
+    }
+    return cmp;
+}
+
 void sortStruct(struct Book* books, const int* size, int key)
 {
     int flag;
@@ -90,46 +130,30 @@ void sortStruct(struct Book* books, const int* size, int key)
             flag = 0;
             for (int i = 0, j = gap; j < *size; i++, j++)
             {
-                if (key == 1) //сортировка по названию
+                int cmp = 0;
+                if (key == 1) // сортировка по названию
                 {
-                    int cmp = strcmp(books[i].name, books[j].name);
-                    if (cmp > 0 || (cmp == 0 && strcmp(books[i].author, books[j].author) > 0)) {
-                        swap = books[j];
-                        books[j] = books[i];
-                        books[i] = swap;
-                        flag = 1;
-                    }
+                    cmp = compareByName(books[i], books[j]);
                 }
-                
-                else if (key==2) // сортировка по автору
+                else if (key == 2) // сортировка по автору
                 {
-                    int cmp = strcmp(books[i].author, books[j].author);
-                    if (cmp > 0 || (cmp == 0 && books[i].year > books[j].year)) {
-                        swap = books[j];
-                        books[j] = books[i];
-                        books[i] = swap;
-                        flag = 1;
-                    }
+                    cmp = compareByAuthor(books[i], books[j]);
                 }
-                
                 else if (key == 3) // сортировка по году
                 {
-                    if ( books[i].year > books[j].year || (books[i].year - books[j].year == 0 && books[i].name > books[j].name)) {
-                        swap = books[j];
-                        books[j] = books[i];
-                        books[i] = swap;
-                        flag = 1;
-                    }
+                    cmp = compareByYear(books[i], books[j]);
                 }
-                
-                else if (key==4) //сортировка по языку
+                else if (key == 4) // сортировка по языку
                 {
-                    if ( books[i].language > books[j].language || (books[i].language - books[j].language == 0 && books[i].name > books[j].name)) {
-                        swap = books[j];
-                        books[j] = books[i];
-                        books[i] = swap;
-                        flag = 1;
-                    }
+                    cmp = compareByLanguage(books[i], books[j]);
+                }
+
+                if (cmp > 0)
+                {
+                    swap = books[j];
+                    books[j] = books[i];
+                    books[i] = swap;
+                    flag = 1;
                 }
             }
         } while (flag);
