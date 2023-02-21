@@ -42,10 +42,10 @@ void printStruct(struct Book* books, int* n)
         gets(books[i].author);
 
         printf("Enter year #%d book::", i + 1);
-        scanf("%d", &books[i].year);
+        scanf_s("%d", &books[i].year);
 
         printf("Enter language::(0 - Rus; 1 - Eng; 2 - Chin; 3 - Span; 4 - Arab; 5 - Oth.)::");
-        scanf("%d", &books[i].language);
+        scanf_s("%d", &books[i].language);
     }
 }
 
@@ -81,37 +81,22 @@ void sortStructByName(struct Book* books, int* size)
     }
 }
 
-void sortStructByAuthor(struct Book* books, int* size)
-{
+void sortStructByAuthor(struct Book* books, int* size) {
     {
-        int flag, k = 0;
+        int flag;
         struct Book swap;
-        for (int gap = *size / 2; gap > 0; gap /= 2)
-        {
-            do
-            {
+        for (int gap = *size / 2; gap > 0; gap /= 2) {
+            do {
                 flag = 0;
-                for (int i = 0, j = gap; j < *size; i++, j++)
-                {
-                    if (books[i].author[k] == books[j].author[k])
-                        k++;
-
-                    if (books[i].author[k] + '0' > books[j].author[k] + '0')
-                    {
-                        swap = books[j];
-                        books[j] = books[i];
-                        books[i] = swap;
-                        flag = 1;
-                    }
-                    else if (books[i].author == books[j].author && books[i].year>books[j].year)
-                    {
+                for (int i = 0, j = gap; j < *size; i++, j++) {
+                    int cmp = strcmp(books[i].author, books[j].author);
+                    if (cmp > 0 || (cmp == 0 && books[i].year > books[j].year)) {
                         swap = books[j];
                         books[j] = books[i];
                         books[i] = swap;
                         flag = 1;
                     }
                 }
-                k = 0;
             } while (flag);
         }
     }
@@ -129,8 +114,7 @@ void sortStructByYear(struct Book* books, int* size)
                 flag = 0;
                 for (int i = 0, j = gap; j < *size; i++, j++)
                 {
-                    if (books[i].year > books[j].year)
-                    {
+                    if ( books[i].year > books[j].year || (books[i].year - books[j].year == 0 && books[i].name > books[j].name)) {
                         swap = books[j];
                         books[j] = books[i];
                         books[i] = swap;
@@ -154,8 +138,7 @@ void sortStructByLanguage(struct Book* books, int* size)
                 flag = 0;
                 for (int i = 0, j = gap; j < *size; i++, j++)
                 {
-                    if (books[i].language > books[j].language)
-                    {
+                    if ( books[i].language > books[j].language || (books[i].language - books[j].language == 0 && books[i].name > books[j].name)) {
                         swap = books[j];
                         books[j] = books[i];
                         books[i] = swap;
@@ -171,7 +154,7 @@ void deleteStruct(struct Book* books, int* n)
 {
     int x;
     printf("Enter the number delete struct::");
-    scanf("%d", &x);
+    scanf_s("%d", &x);
     struct Book temp;
     for (int i = x - 1; i < *n - 1; i++)
     {
@@ -194,7 +177,7 @@ int menu()
     printf("5 - To delete a structure by book number\n");
     printf("6 - To exit the program\n");
 
-    scanf("%d", &arg);
+    scanf_s("%d", &arg);
     return arg;
 }
 
@@ -204,8 +187,9 @@ int main()
     int n;
 
     printf("Enter the number of books to add::");
-    scanf("%d", &n);
+    scanf_s("%d", &n);
     int* pn = &n;
+    printf("%d", *pn);
 
     struct Book* books;
     books = (struct Book*)malloc(n * sizeof(struct Book));
