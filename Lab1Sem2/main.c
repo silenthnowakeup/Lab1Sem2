@@ -168,7 +168,9 @@ void deleteStruct(struct Book** books, int* n)
     }
     for (int i = x - 1; i < *n - 1; i++)
     {
-        (*books)[i] = (*books)[i + 1];
+        if (i + 1 < *n) {
+            (*books)[i] = (*books)[i + 1];
+        }
     }
     *n = *n - 1;
     struct Book* temp = (struct Book*)realloc(*books, *n * sizeof(struct Book));
