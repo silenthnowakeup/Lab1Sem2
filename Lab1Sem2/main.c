@@ -161,19 +161,27 @@ void sortStruct(struct Book* books, const int* size, int key)
     }
 }
 
-
 void deleteStruct(struct Book* books, int* n)
 {
     int x;
-    printf("Enter the number delete struct::");
+    printf("Enter the number of the struct to delete:");
     scanf("%d", &x);
-    struct Book temp;
+    if (x < 1 || x > *n) {
+        printf("Invalid input\n");
+        return;
+    }
     for (int i = x - 1; i < *n - 1; i++)
     {
-        books[i]=books[i+1];
+        books[i] = books[i + 1];
     }
     *n = *n - 1;
-    books = (struct Book*)realloc(books, *n * sizeof(struct Book));
+    struct Book* temp = (struct Book*)realloc(books, *n * sizeof(struct Book));
+    if (temp != NULL) {
+        books = temp;
+    } else {
+        printf("Error: memory allocation failed.\n");
+        return;
+    }
 }
 
 int menu()
@@ -230,7 +238,10 @@ int main()
                 outputStruct(books, pn);
                 break;
             case 6:
-                return 0;
+                printf("Exiting program\n");
+                free(books);
+                exit(0);
+                break;
         }
     }
 }
