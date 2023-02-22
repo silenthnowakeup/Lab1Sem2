@@ -75,7 +75,6 @@ void outputStruct(struct Book* books,const int* n)
 {
     for (int i = 0; i < *n; i++)
     {
-        if (i >= 0 && i < *n)
             printf("Name:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
     }
 }
@@ -161,7 +160,7 @@ void sortStruct(struct Book* books, const int* size, int key)
     }
 }
 
-void deleteStruct(struct Book* books, int* n)
+void deleteStruct(struct Book** books, int* n)
 {
     int x;
     printf("Enter the number of the struct to delete:");
@@ -172,12 +171,12 @@ void deleteStruct(struct Book* books, int* n)
     }
     for (int i = x - 1; i < *n - 1; i++)
     {
-        books[i] = books[i + 1];
+        (*books)[i] = (*books)[i + 1];
     }
     *n = *n - 1;
-    struct Book* temp = (struct Book*)realloc(books, *n * sizeof(struct Book));
+    struct Book* temp = (struct Book*)realloc(*books, *n * sizeof(struct Book));
     if (temp != NULL) {
-        books = temp;
+        *books = temp;
     } else {
         printf("Error: memory allocation failed.\n");
         return;
@@ -234,7 +233,7 @@ int main()
                 outputStruct(books, pn);
                 break;
             case 5:
-                deleteStruct(books, pn);
+                deleteStruct(&books, pn);
                 outputStruct(books, pn);
                 break;
             case 6:
