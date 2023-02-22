@@ -75,11 +75,7 @@ void outputStruct(struct Book* books,const int* n)
 {
     for (int i = 0; i < *n; i++)
     {
-        if (books[i].language >= 0 && books[i].language < 6) {
             printf("\tName:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
-        } else {
-            printf("\tName:%s\t Author:%s\t Year:%d\t Language: Unknown\n", books[i].name, books[i].author, books[i].year);
-        }
     }
 }
 
@@ -172,7 +168,7 @@ void deleteStruct(struct Book** books, int* n)
     }
     *n = *n - 1;
     struct Book* temp = (struct Book*)realloc(*books, *n * sizeof(struct Book));
-    if (temp != NULL || *n == 0) {
+    if (temp != NULL) {
         *books = temp;
     } else {
         printf("Error: memory allocation failed.\n");
