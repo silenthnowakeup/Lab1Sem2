@@ -71,11 +71,11 @@ void printStruct(struct Book* books,const int* n)
     }
 }
 
-void outputStruct(struct Book* books,const int* n)
+void outputStruct(struct Book** books,const int* n)
 {
     for (int i = 0; i < *n; i++)
     {
-            printf("Name:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
+            printf("\tName:%s\t Author:%s\t Year:%d\t Language:%s\n", (*books)[i].name, (*books[i]).author, (*books[i]).year, LanguageName[(*books)[i].language]);
     }
 }
 
@@ -218,28 +218,32 @@ int main()
         {
             case 1:
                 sortStruct(books, pn,1);
-                outputStruct(books, pn);
+                outputStruct(&books, pn);
                 break;
             case 2:
                 sortStruct(books, pn,2);
-                outputStruct(books, pn);
+                outputStruct(&books, pn);
                 break;
             case 3:
                 sortStruct(books, pn,3);
-                outputStruct(books, pn);
+                outputStruct(&books, pn);
                 break;
             case 4:
                 sortStruct(books, pn,4);
-                outputStruct(books, pn);
+                outputStruct(&books, pn);
                 break;
             case 5:
                 deleteStruct(&books, pn);
-                outputStruct(books, pn);
+                outputStruct(&books, pn);
                 break;
             case 6:
                 printf("Exiting program\n");
                 free(books);
                 exit(0);
+                break;
+
+            default:
+                printf("Invalid input\n");
                 break;
         }
     }
