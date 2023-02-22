@@ -33,10 +33,10 @@ char* getString() {
     int maxLength = 16;
     int length = 0;
     char* str = malloc(maxLength * sizeof(char));
-    int i = getchar(); // используем переменную типа int
-    char c; // создаем переменную типа char
+    int i = getchar();
+    char c; 
     while (i != '\n') {
-        c = (char)i; // явно приводим тип int к типу char
+        c = (char)i; 
         str[length] = c;
         length++;
 
@@ -71,11 +71,11 @@ void printStruct(struct Book* books,const int* n)
     }
 }
 
-void outputStruct(struct Book** books,const int* n)
+void outputStruct(struct Book* books,const int* n)
 {
     for (int i = 0; i < *n; i++)
     {
-            printf("\tName:%s\t Author:%s\t Year:%d\t Language:%s\n", (*books)[i].name, (*books[i]).author, (*books[i]).year, LanguageName[(*books)[i].language]);
+            printf("\tName:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
     }
 }
 
@@ -123,42 +123,38 @@ void sortStruct(struct Book* books, const int* size, int key)
 {
     int flag;
     struct Book swap;
-    for (int gap = *size / 2; gap > 0; gap /= 2)
-    {
-        do
-        {
-            flag = 0;
-            for (int i = 0, j = gap; j < *size; i++, j++)
-            {
-                int cmp = 0;
-                if (key == 1) // сортировка по названию
-                {
-                    cmp = compareByName(books[i], books[j]);
-                }
-                else if (key == 2) // сортировка по автору
-                {
-                    cmp = compareByAuthor(books[i], books[j]);
-                }
-                else if (key == 3) // сортировка по году
-                {
-                    cmp = compareByYear(books[i], books[j]);
-                }
-                else if (key == 4) // сортировка по языку
-                {
-                    cmp = compareByLanguage(books[i], books[j]);
-                }
+    int gap = *size / 2;
 
-                if (cmp > 0)
-                {
-                    swap = books[j];
-                    books[j] = books[i];
-                    books[i] = swap;
-                    flag = 1;
-                }
+    while (gap > 0) {
+        flag = 0;
+
+        for (int i = 0, j = gap; j < *size; i++, j++) {
+            int cmp = 0;
+            if (key == 1) {
+                cmp = compareByName(books[i], books[j]);
             }
-        } while (flag);
+            else if (key == 2) {
+                cmp = compareByAuthor(books[i], books[j]);
+            }
+            else if (key == 3) {
+                cmp = compareByYear(books[i], books[j]);
+            }
+            else if (key == 4) {
+                cmp = compareByLanguage(books[i], books[j]);
+            }
+
+            if (cmp > 0) {
+                swap = books[j];
+                books[j] = books[i];
+                books[i] = swap;
+                flag = 1;
+            }
+        }
+
+        gap /= 2;
     }
 }
+
 
 void deleteStruct(struct Book** books, int* n)
 {
@@ -218,23 +214,23 @@ int main()
         {
             case 1:
                 sortStruct(books, pn,1);
-                outputStruct(&books, pn);
+                outputStruct(books, pn);
                 break;
             case 2:
                 sortStruct(books, pn,2);
-                outputStruct(&books, pn);
+                outputStruct(books, pn);
                 break;
             case 3:
                 sortStruct(books, pn,3);
-                outputStruct(&books, pn);
+                outputStruct(books, pn);
                 break;
             case 4:
                 sortStruct(books, pn,4);
-                outputStruct(&books, pn);
+                outputStruct(books, pn);
                 break;
             case 5:
                 deleteStruct(&books, pn);
-                outputStruct(&books, pn);
+                outputStruct(books, pn);
                 break;
             case 6:
                 printf("Exiting program\n");
