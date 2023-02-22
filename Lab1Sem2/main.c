@@ -75,6 +75,7 @@ void outputStruct(struct Book* books,const int* n)
 {
     for (int i = 0; i < *n; i++)
     {
+        if (i >= 0 && i < *n)
             printf("\tName:%s\t Author:%s\t Year:%d\t Language:%s\n", books[i].name, books[i].author, books[i].year, LanguageName[books[i].language]);
     }
 }
