@@ -119,47 +119,6 @@ int compareByLanguage(struct Book book1, struct Book book2)
     return cmp;
 }
 
-/*void sortStruct(struct Book* books, const int* size, int key)
-{
-    int flag;
-    struct Book swap;
-    for (int gap = *size / 2; gap > 0; gap /= 2)
-    {
-        do
-        {
-            flag = 0;
-            for (int i = 0, j = gap; j < *size; i++, j++)
-            {
-                int cmp = 0;
-                if (key == 1) // сортировка по названию
-                {
-                    cmp = compareByName(books[i], books[j]);
-                }
-                else if (key == 2) // сортировка по автору
-                {
-                    cmp = compareByAuthor(books[i], books[j]);
-                }
-                else if (key == 3) // сортировка по году
-                {
-                    cmp = compareByYear(books[i], books[j]);
-                }
-                else if (key == 4) // сортировка по языку
-                {
-                    cmp = compareByLanguage(books[i], books[j]);
-                }
-
-                if (cmp > 0)
-                {
-                    swap = books[j];
-                    books[j] = books[i];
-                    books[i] = swap;
-                    flag = 1;
-                }
-            }
-        } while (flag);
-    }
-}*/
-
 void sortStruct(struct Book* books, const int* size, int key)
 {
     struct Book swap;
